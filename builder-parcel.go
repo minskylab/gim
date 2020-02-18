@@ -10,7 +10,16 @@ type ParcelBuilder struct {
 	parcelBinary string
 }
 
-func (p *ParcelBuilder) BuildBrowserScripts(wSpace *workspace, format bool) error {
+func NewParcelBuilder(parcelBinaryLocation ...string) *ParcelBuilder {
+	bin := "parcel"
+	if len(parcelBinaryLocation) > 0 {
+		bin = parcelBinaryLocation[0]
+	}
+
+	return &ParcelBuilder{parcelBinary: bin}
+}
+
+func (p *ParcelBuilder) BuildBrowserScripts(wSpace *Workspace, format bool) error {
 	buildPath := path.Join(wSpace.scriptsPublicFolder(), "*")
 	browserTargetPath := path.Join(wSpace.scriptsBrowserFolder())
 

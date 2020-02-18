@@ -1,10 +1,10 @@
 package gim
 
 
-type config struct {
-	PagesFolder string
+type Config struct {
+	PagesFolder  string
 	PublicFolder string
-	MintFolder string
+	GimFolder    string
 
 	DistPublicFolder string
 	DistBrowserFolder string
@@ -15,11 +15,11 @@ type config struct {
 }
 
 
-func newDefaultConfig() *config {
-	return &config{
+func NewDefaultConfig() *Config {
+	return &Config{
 		PagesFolder:       "pages",
 		PublicFolder:      "public",
-		MintFolder:        ".mint",
+		GimFolder:         ".gim",
 		DistPublicFolder:  "content",
 		DistBrowserFolder: "browser",
 		TemplateHTMLName:  "template.html",
@@ -27,3 +27,4 @@ func newDefaultConfig() *config {
 		ParcelCommand:     "parcel",
 	}
 }
+

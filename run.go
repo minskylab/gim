@@ -20,7 +20,7 @@ func (g *Gim) Run() error {
 	g.Printer.HideLoading()
 
 	g.Printer.ShowLoading(" Mounting .mint dir")
-	tableRoutes, err := g.mountDist(g.Workspace.Config.MintFolder, routes)
+	tableRoutes, err := g.mountDist(g.Workspace.Config.GimFolder, routes)
 	if err != nil {
 		return err
 	}

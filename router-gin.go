@@ -22,8 +22,8 @@ func NewGinRouter() *GinRouter {
 	}
 }
 
-func (r *GinRouter) fileInBlackList(workspace *workspace, filename string, extra ...string) bool {
-	blackList := []string{workspace.Config.MintFolder, ".cache", ".git", "node-modules"}
+func (r *GinRouter) fileInBlackList(workspace *Workspace, filename string, extra ...string) bool {
+	blackList := []string{workspace.Config.GimFolder, ".cache", ".git", "node-modules"}
 	for _, e := range extra {
 		blackList = append(blackList, e)
 	}
@@ -64,7 +64,7 @@ func (r *GinRouter) describeRoute(filename string) routeDescription {
 }
 
 
-func (r *GinRouter) MountStatics(wSpace *workspace) error {
+func (r *GinRouter) MountStatics(wSpace *Workspace) error {
 	r.engine.Static("/"+ wSpace.Config.DistPublicFolder, wSpace.scriptsBrowserFolder())
 	r.engine.Static("/"+ wSpace.Config.PublicFolder, wSpace.publicFolder())
 	r.engine.LoadHTMLFiles(wSpace.mainTemplate())
@@ -79,14 +79,14 @@ func (r *GinRouter) MountStatics(wSpace *workspace) error {
 			continue
 		}
 
-		absPath := path.Join(wSpace.Path, wSpace.Config.MintFolder, wSpace.Config.DistBrowserFolder, file.Name())
+		absPath := path.Join(wSpace.Path, wSpace.Config.GimFolder, wSpace.Config.DistBrowserFolder, file.Name())
 		r.engine.Static("/"+file.Name(), absPath)
 	}
 
 	return nil
 }
 
-func (r *GinRouter) DefineRoutes(wSpace *workspace, tableRoutes map[string]string, parent string, routes routesTree) error {
+func (r *GinRouter) DefineRoutes(wSpace *Workspace, tableRoutes map[string]string, parent string, routes routesTree) error {
 	for p, route := range routes {
 		if len(route) > 0 {
 			if err := r.DefineRoutes(wSpace, tableRoutes, strings.Join([]string{parent, p}, "/"), route); err != nil {

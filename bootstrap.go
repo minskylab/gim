@@ -33,7 +33,7 @@ const defaultTemplate = `<!DOCTYPE html>
 `
 
 func (g *Gim) bootstrapDist(templateFile ...string) error {
-	filename := path.Join(g.Workspace.Path, g.Config.MintFolder, g.Config.TemplateHTMLName)
+	filename := path.Join(g.Workspace.Path, g.Workspace.Config.GimFolder, g.Workspace.Config.TemplateHTMLName)
 	if err := ioutil.WriteFile(filename, []byte(defaultTemplate), 0644); err != nil {
 		return err
 	}

@@ -10,7 +10,7 @@ import (
 )
 
 func (g *Gim) fileInBlackList( filename string, extra ...string) bool {
-	blackList := []string{g.Workspace.Config.MintFolder, ".cache", ".git", "node-modules"}
+	blackList := []string{g.Workspace.Config.GimFolder, "", ".", ".cache", ".git", "node-modules"}
 	for _, e := range extra {
 		blackList = append(blackList, e)
 	}
@@ -43,7 +43,7 @@ func (g *Gim) mountDist(location string, routes routesTree) (map[string]string, 
 				tableRoutes[k] = v
 			}
 		} else {
-			fixedLocation := strings.Replace(location, g.Config.MintFolder, g.Config.PagesFolder, 1)
+			fixedLocation := strings.Replace(location, g.Workspace.Config.GimFolder, g.Workspace.Config.PagesFolder, 1)
 			filepath := path.Join(g.Workspace.Path, fixedLocation, p)
 			hashName := g.generateLittleHash(8) + ".js"
 
@@ -62,7 +62,7 @@ func (g *Gim) mountDist(location string, routes routesTree) (map[string]string, 
 			}
 
 
-			response, err := exec.Command(g.Config.ImbacCommand, file.Name()).Output()
+			response, err := exec.Command(g.Workspace.Config.ImbacCommand, file.Name()).Output()
 			if err != nil {
 				fmt.Println(string(response))
 				return nil, err
@@ -73,16 +73,16 @@ func (g *Gim) mountDist(location string, routes routesTree) (map[string]string, 
 				return nil, err
 			}
 
-			targetFile := path.Join(g.Workspace.Path, g.Config.MintFolder, g.Config.DistPublicFolder, hashName)
+			targetFile := path.Join(g.Workspace.Path, g.Workspace.Config.GimFolder, g.Workspace.Config.DistPublicFolder, hashName)
 
 			if err = ioutil.WriteFile(targetFile, newData, 0644); err != nil {
 				return nil, err
 			}
 
-			prefixToCut := path.Join(g.Workspace.Path, g.Config.PagesFolder)
+			prefixToCut := path.Join(g.Workspace.Path, g.Workspace.Config.PagesFolder)
 			virtualPath := strings.Replace(filepath, prefixToCut, "", 1)
 
-			prefixToCut = path.Join(g.Workspace.Path, g.Config.MintFolder)
+			prefixToCut = path.Join(g.Workspace.Path, g.Workspace.Config.GimFolder)
 			realPath := strings.Replace(targetFile, prefixToCut, "", 1)
 
 			tableRoutes[virtualPath] = realPath
@@ -118,7 +118,7 @@ func (g *Gim) remountDist(location string, tableRoutes map[string]string) error 
 			return err
 		}
 
-		response, err := exec.Command(g.Config.ImbacCommand, file.Name()).Output()
+		response, err := exec.Command(g.Workspace.Config.ImbacCommand, file.Name()).Output()
 		if err != nil {
 			fmt.Println(string(response))
 			return err
@@ -146,7 +146,7 @@ func (g *Gim) mirrorProjectToContent() error {
 	}
 
 	for _, file := range files {
-		if g.fileInBlackList(file.Name(), g.Config.PagesFolder, g.Config.PublicFolder) {
+		if g.fileInBlackList(file.Name(), g.Workspace.Config.PagesFolder, g.Workspace.Config.PublicFolder) {
 			continue
 		}
 
@@ -157,7 +157,7 @@ func (g *Gim) mirrorProjectToContent() error {
 		}
 	}
 
-	resp, err := exec.Command(g.Config.ImbacCommand, g.Workspace.scriptsPublicFolder()).Output()
+	resp, err := exec.Command(g.Workspace.Config.ImbacCommand, g.Workspace.scriptsPublicFolder()).Output()
 	if err != nil {
 		fmt.Println(string(resp))
 		return err

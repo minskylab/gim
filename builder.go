@@ -2,5 +2,5 @@ package gim
 
 
 type Builder interface {
-	BuildBrowserScripts(workspace *workspace, format bool) error
+	BuildBrowserScripts(workspace *Workspace, format bool) error
 }

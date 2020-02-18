@@ -3,25 +3,20 @@ package gim
 import "errors"
 
 type Gim struct {
-	Workspace *workspace
-	Config *config
+	Workspace *Workspace
 
 	Router Router
 	Builder Builder
 	Printer Printer
 }
 
-func NewGim(w *workspace, c *config, router Router, builder Builder, printer Printer) (*Gim, error) {
-	if w == nil || c == nil {
-		return nil, errors.New("the workspace and config must have a correct values")
-	}
-	if w.Config != c {
-		w.Config = c
+func NewGim(w *Workspace, router Router, builder Builder, printer Printer) (*Gim, error) {
+	if w == nil || w.Config == nil {
+		return nil, errors.New("the Workspace and Config must have a correct values")
 	}
 
 	return &Gim{
 		Workspace: w,
-		Config:    c,
 		Router:    router,
 		Builder:   builder,
 		Printer:   printer,
