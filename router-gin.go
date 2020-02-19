@@ -11,6 +11,8 @@ import (
 	"github.com/robertkrimen/otto"
 )
 
+const configFilename = "_gimConfig"
+
 type GinRouter struct {
 	engine *gin.Engine
 }
@@ -23,7 +25,7 @@ func NewGinRouter() *GinRouter {
 }
 
 func (r *GinRouter) fileInBlackList(workspace *Workspace, filename string, extra ...string) bool {
-	blackList := []string{workspace.Config.GimFolder, ".cache", ".git", "node-modules"}
+	blackList := []string{workspace.Config.GimFolder, "", ".", ".cache", ".git", "node_modules"}
 	for _, e := range extra {
 		blackList = append(blackList, e)
 	}
@@ -109,7 +111,7 @@ func (r *GinRouter) DefineRoutes(wSpace *Workspace, tableRoutes map[string]strin
 
 				params := gin.H{"Source": source}
 
-				configString := regexp.MustCompile(`\w+ _mintConfig = {\n*([^}]+)}`).FindString(string(data))
+				configString := regexp.MustCompile(`\w+ `+configFilename+` = {\n*([^}]+)}`).FindString(string(data))
 				if strings.HasPrefix(configString, "const") {
 					configString = strings.Replace(configString, "const", "var", 1)
 				}
@@ -122,7 +124,7 @@ func (r *GinRouter) DefineRoutes(wSpace *Workspace, tableRoutes map[string]strin
 					return
 				}
 
-				conf, err := vm.Get("_mintConfig")
+				conf, err := vm.Get(configFilename)
 				if err != nil {
 					c.String(500, err.Error())
 					return

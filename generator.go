@@ -3,8 +3,7 @@ package gim
 func (g *Gim) regenerateScripts(tableRoutes map[string]string) error {
 
 	g.Printer.ShowLoading("Mounting .mint dir")
-	err := g.remountDist(g.Workspace.Config.GimFolder, tableRoutes)
-	if err != nil {
+	if err := g.remountDist(g.Workspace.Config.GimFolder, tableRoutes); err != nil {
 		return err
 	}
 	g.Printer.HideLoading()

@@ -1,10 +1,14 @@
 package gim
 
-import "errors"
+import (
+	"errors"
+
+	"github.com/fsnotify/fsnotify"
+)
 
 type Gim struct {
 	Workspace *Workspace
-
+	watcher *fsnotify.Watcher
 	Router Router
 	Builder Builder
 	Printer Printer

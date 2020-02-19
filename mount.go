@@ -10,7 +10,7 @@ import (
 )
 
 func (g *Gim) fileInBlackList( filename string, extra ...string) bool {
-	blackList := []string{g.Workspace.Config.GimFolder, "", ".", ".cache", ".git", "node-modules"}
+	blackList := []string{g.Workspace.Config.GimFolder, "", ".", ".cache", ".git", "node_modules"}
 	for _, e := range extra {
 		blackList = append(blackList, e)
 	}
