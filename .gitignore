@@ -16,3 +16,6 @@
 .idea
 gim
 playground
+node_modules
+.cache
+.gim

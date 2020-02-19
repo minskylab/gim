@@ -1,0 +1,8 @@
+{
+  "scripts": {
+    "dev": "go run entrypoint.go"
+  },
+  "devDependencies": {
+    "imba": "^1.5.2"
+  }
+}

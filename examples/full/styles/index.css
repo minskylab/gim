@@ -1,0 +1,63 @@
+@import url('https://fonts.googleapis.com/css?family=Karla:400,700|Rubik:400,700&display=swap');
+
+body {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+}
+h1 {
+    margin: 0;
+    padding : 0;
+}
+
+.main {
+    height: 100%;
+    background-color: #fffcf0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    font-family: "Karla", sans-serif;
+}
+
+.center {
+    display: flex;
+    justify-content: center;
+}
+
+.footer {
+    position: absolute;
+    bottom: 0;
+    background-color: #1b1b1b;
+    display: flex;
+    /*padding: 1em;*/
+    width: 100%;
+    flex-wrap: wrap;
+    color: white;
+    justify-content: space-between;
+}
+
+.gim {
+    display: inline;
+    color: #ffdf53;
+
+}
+
+.card {
+    display: block;
+}
+
+.list {
+    margin-right: 2em;
+}
+
+.minsky-footer {
+    margin-left: 2em;
+}
+
+.title {
+    margin-top: 2.2em;
+}
+
+@-moz-keyframes spin { 100% { -moz-transform: rotate(360deg); } }
+@-webkit-keyframes spin { 100% { -webkit-transform: rotate(360deg); } }
+@keyframes spin { 100% { -webkit-transform: rotate(360deg); transform:rotate(360deg); } }
