@@ -3,6 +3,7 @@
     "dev": "go run entrypoint.go"
   },
   "devDependencies": {
-    "imba": "^1.5.2"
+    "imba": "^1.5.2",
+    "parcel": "^1.12.4"
   }
 }
